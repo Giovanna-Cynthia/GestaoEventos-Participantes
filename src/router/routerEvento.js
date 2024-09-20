@@ -4,23 +4,23 @@ const { validateEvento, validateEventoId } = require("../middlewares/ValidateEve
 
 const router = Router();
 
-router.post('/evento', validateEvento, (req, res) => {
+router.post('/', validateEvento, (req, res) => {
     EventoController.create(req, res)
 });
 
-router.get('/evento', validateEvento, (req, res) => {
+router.get('/', validateEvento, (req, res) => {
     EventoController.getAll(req, res)
 });
 
-router.delete('/evento/:id', validateEvento, validateEventoId, (req, res) => {
+router.delete('/:id', validateEvento, validateEventoId, (req, res) => {
     EventoController.delete(req, res)
 });
 
-router.put('evento/:id', validateEvento, validateEventoId, (req, res) => {
+router.put('/:id', validateEvento, validateEventoId, (req, res) => {
     EventoController.update(req, res)
 });
 
-router.get('evento/:id', validateEventoId, (req, res) => {
+router.get('/:id', validateEventoId, (req, res) => {
     EventoController.getOne(req, res)
 });
 

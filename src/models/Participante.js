@@ -12,6 +12,7 @@ const Participante = sequelize.define('participante', {
         allowNull: false
     },
     eventoId: {
+        onDelete: 'CASCADE',
         type: DataTypes.INTEGER,
         references: {
             model: Evento,

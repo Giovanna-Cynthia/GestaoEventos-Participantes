@@ -5,6 +5,8 @@ const EventoController = {
         try{
             const {nome, data, localizacao} = req.body;
 
+            console.log("passou aqui")
+
             const eventoCriado = await Evento.create({nome, data, localizacao});
 
             return res.status(200).json({
