@@ -1,11 +1,12 @@
-const Evento = require("../models/Participante");
+const Evento = require("../models/Evento");
+const Participante = require("../models/Participante");
 
 const EventoController = {
     create: async (req, res) => {
         try{
             const {nome, data, localizacao} = req.body;
 
-            console.log("passou aqui")
+           
 
             const eventoCriado = await Evento.create({nome, data, localizacao});
 
@@ -91,27 +92,57 @@ const EventoController = {
     },
 
     delete: async (req, res) => {
-        try{
+        try {
             const { id } = req.params;
-
-            const eventoFinded = await Evento.findByPk(id);
-
-            if(eventoFinded == null) {
+            const eventFound = await Evento.findByPk(id);
+            if (eventFound === null) {
                 return res.status(404).json({
-                    msg: "Evento não encontrado"
-                })
+                    msg: 'Evento não encontrado'
+                });
             }
+            await Participante.destroy({
+                where: { eventoId: id }
+            });
+    
+            await Evento.destroy({
+                where: { id: id }
+            });
            
-            await eventoFinded.destroy(); 
-
             return res.status(200).json({
-                msg:"Evento deletado com sucesso!"
+                msg: 'Evento deletado com sucesso!'
             });
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ msg: "Acione o Suporte"});
+            return res.status(500).json({
+                msg: 'Acione o suporte.'
+            });
         }
-    }
+    },
+
+    getEvent: async (req, res) => {
+        try {
+          const { id } = req.params;
+     
+          const participante = await Participante.findAll({
+            where: { eventoId: id }
+          });
+     
+          if (!participante) {
+            return res.status(404).json({
+              msg: 'Participante não encontrado em nenhum evento'
+            });
+          }
+     
+          return res.status(200).json({
+            participante
+          })
+     
+        } catch (error) {
+          return res.status(500).json({
+            msg: 'Erro ao buscar eventos. Acione o suporte!!'
+          })
+        }
+      }
 }
 
 module.exports = EventoController;

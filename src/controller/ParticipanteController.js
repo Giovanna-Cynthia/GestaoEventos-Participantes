@@ -94,7 +94,7 @@ const ParticipanteController = {
 
             const participanteFinded = await Participante.findByPk(id);
 
-            if(participanteFinded == null) {
+            if(participanteFinded == null) { 
                 return res.status(404).json({
                     msg: "Participante não encontrado"
                 })
@@ -109,7 +109,33 @@ const ParticipanteController = {
             console.error(error);
             return res.status(500).json({ msg: "Acione o Suporte"});
         }
-    }
+    },
+
+    getParticipantes: async (req, res) => {
+        try {
+          const { eventoId } = req.params;
+     
+          const participantes = await Participante.findAll({
+            where: { eventoId: eventoId }
+          });
+     
+          if (!participantes) {
+            return res.status(404).json({
+              msg: 'Erro ao buscar participantes por evento específico'
+            })
+          };
+     
+          return res.status(200).json({
+            participantes
+          })
+     
+     
+        } catch (error) {
+          return res.status(500).json({
+            msg: 'Acione o suporte!'
+          })
+        }
+      }
 }
 
 module.exports = ParticipanteController;

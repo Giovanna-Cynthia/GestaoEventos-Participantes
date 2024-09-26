@@ -4,15 +4,15 @@ const Evento = require('./Evento');
 
 const Participante = sequelize.define('participante', {
     nome: {
-    type: DataTypes.STRING,
-    allowNull: false
+        type: DataTypes.STRING,
+        allowNull: false
     },
     email: {
         type: DataTypes.STRING,
         allowNull: false
     },
     eventoId: {
-        onDelete: 'CASCADE',
+        
         type: DataTypes.INTEGER,
         references: {
             model: Evento,

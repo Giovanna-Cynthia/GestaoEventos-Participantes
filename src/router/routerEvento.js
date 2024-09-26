@@ -8,12 +8,12 @@ router.post('/', validateEvento, (req, res) => {
     EventoController.create(req, res)
 });
 
-router.get('/', validateEvento, (req, res) => {
+router.get('/', (req, res) => {
     EventoController.getAll(req, res)
 });
 
-router.delete('/:id', validateEvento, validateEventoId, (req, res) => {
-    EventoController.delete(req, res)
+router.delete('/:id', validateEventoId, (req, res) => {
+    EventoController.delete(req, res)   
 });
 
 router.put('/:id', validateEvento, validateEventoId, (req, res) => {
@@ -23,5 +23,10 @@ router.put('/:id', validateEvento, validateEventoId, (req, res) => {
 router.get('/:id', validateEventoId, (req, res) => {
     EventoController.getOne(req, res)
 });
+
+router.get('/:id/participante', (req, res) => {
+    EventoController.getEvent(req, res);
+});
+
 
 module.exports = router;
