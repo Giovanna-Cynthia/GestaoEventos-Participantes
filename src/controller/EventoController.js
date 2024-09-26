@@ -5,9 +5,7 @@ const EventoController = {
     create: async (req, res) => {
         try{
             const {nome, data, localizacao} = req.body;
-
-           
-
+            
             const eventoCriado = await Evento.create({nome, data, localizacao});
 
             return res.status(200).json({

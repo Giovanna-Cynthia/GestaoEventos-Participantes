@@ -7,6 +7,12 @@ const ParticipanteController = {
 
             const participanteCriado = await Participante.create({nome, email, eventoId});
 
+            if(email){
+                return res.status(404).json({
+                    msg:"Email já cadastrado!"
+                });
+            }
+
             return res.status(200).json({
                 msg: "Participante criado com sucesso!",
                 user: participanteCriado
